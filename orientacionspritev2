@@ -1,0 +1,154 @@
+# Orientacion para imagenes
+# Class Herramientas
+
+Funcion matriz pixeles a imagen optimizada
+	public static BufferedImage Imagen(int[] pixeles, int ancho, int alto) {
+
+		BufferedImage imagen = new BufferedImage(ancho, alto, BufferedImage.TYPE_INT_RGB);
+		imagen.setRGB(0, 0, ancho, alto, pixeles, 0, ancho);
+
+		GraphicsConfiguration gc = GraphicsEnvironment.getLocalGraphicsEnvironment().getDefaultScreenDevice()
+				.getDefaultConfiguration();
+		BufferedImage imagenAcelerada = gc.createCompatibleImage(imagen.getWidth(null), imagen.getHeight(null),
+				Transparency.OPAQUE);
+		Graphics g = imagenAcelerada.getGraphics();
+		g.drawImage(imagen, 0, 0, null);
+		return imagenAcelerada;
+
+	}
+	
+# Class Sprite
+
+constantes
+	public final static int N000 = 1;
+	public final static int N090 = 2;
+	public final static int N180 = 3;
+	public final static int N270 = 4;
+	public final static int I000 = 5;
+	public final static int I090 = 6;
+	public final static int I180 = 7;
+	public final static int I270 = 8;
+
+constructor
+	public Sprite(final BufferedImage imagen, final int Orientacion) {
+
+		this._ancho = imagen.getWidth();
+		this._alto = imagen.getHeight();
+
+		int[] pixeles = new int[this._ancho * this._alto];
+		imagen.getRGB(0, 0, _ancho, _alto, pixeles, 0, _ancho);
+
+		switch (Orientacion) {
+			case Sprite.N000 :
+				pixeles = leerspritex01y01(pixeles, _ancho, _alto);
+				break;
+			case Sprite.N090 :
+				pixeles = leerspritey10x01(pixeles, _ancho, _alto);
+				break;
+			case Sprite.N180 :
+				pixeles = leerspritex10y10(pixeles, _ancho, _alto);
+				break;
+			case Sprite.N270 :
+				pixeles = leerspritey01x10(pixeles, _ancho, _alto);
+				break;
+			case Sprite.I000 :
+				pixeles = leerspritex10y01(pixeles, _ancho, _alto);
+				break;
+			case Sprite.I090 :
+				pixeles = leerspritey10x10(pixeles, _ancho, _alto);
+				break;
+			case Sprite.I180 :
+				pixeles = leerspritex01y10(pixeles, _ancho, _alto);
+				break;
+			case Sprite.I270 :
+				pixeles = leerspritey01x01(pixeles, _ancho, _alto);
+				break;
+			default :
+				pixeles = leerspritey01x01(pixeles, _ancho, _alto);
+		}
+		this._imagen = CargarRecursos.Imagen(pixeles, _ancho, _alto);
+	}
+
+
+funciones de apoyo
+public int[] leerspritex01y01(final int[] pixelesoriginal, final int ancho, final int alto) {
+		int[] pixeles = new int[ancho * alto];
+		for (int y = 0; y < alto; y++) {
+			for (int x = 0; x < ancho; x++) {
+				pixeles[x + y * ancho] = pixelesoriginal[x + (y) * ancho];
+			}
+		}
+		return pixeles;
+	}
+
+	public int[] leerspritex10y01(final int[] pixelesoriginal, final int ancho, final int alto) {
+		int[] pixeles = new int[ancho * alto];
+		for (int y = 0; y < alto; y++) {
+			for (int x = 0; x < ancho; x++) {
+				pixeles[(ancho - x - 1) + y * ancho] = pixelesoriginal[x + (y) * ancho];
+			}
+		}
+		return pixeles;
+	}
+
+	public int[] leerspritex01y10(final int[] pixelesoriginal, final int ancho, final int alto) {
+		int[] pixeles = new int[ancho * alto];
+		for (int y = 0; y < alto; y++) {
+			for (int x = 0; x < ancho; x++) {
+				pixeles[x + (ancho - y - 1) * ancho] = pixelesoriginal[x + (y) * ancho];
+			}
+		}
+		return pixeles;
+	}
+
+	public int[] leerspritex10y10(final int[] pixelesoriginal, final int ancho, final int alto) {
+		int[] pixeles = new int[ancho * alto];
+		for (int y = 0; y < alto; y++) {
+			for (int x = 0; x < ancho; x++) {
+				pixeles[(ancho - x - 1) + (ancho - y - 1) * ancho] = pixelesoriginal[x + (y) * ancho];
+			}
+		}
+		return pixeles;
+	}
+
+	public int[] leerspritey01x01(final int[] pixelesoriginal, final int ancho, final int alto) {
+		int[] pixeles = new int[ancho * alto];
+		for (int y = 0; y < alto; y++) {
+			for (int x = 0; x < ancho; x++) {
+				pixeles[y + x * ancho] = pixelesoriginal[x + (y) * ancho];
+			}
+		}
+		return pixeles;
+	}
+
+	public int[] leerspritey01x10(final int[] pixelesoriginal, final int ancho, final int alto) {
+		int[] pixeles = new int[ancho * alto];
+		for (int y = 0; y < alto; y++) {
+			for (int x = 0; x < ancho; x++) {
+				pixeles[y + (ancho - 1 - x) * ancho] = pixelesoriginal[x + (y) * ancho];
+			}
+		}
+		return pixeles;
+	}
+
+	public int[] leerspritey10x01(final int[] pixelesoriginal, final int ancho, final int alto) {
+		int[] pixeles = new int[ancho * alto];
+		for (int y = 0; y < alto; y++) {
+			for (int x = 0; x < ancho; x++) {
+				pixeles[(ancho - 1 - y) + x * ancho] = pixelesoriginal[x + (y) * ancho];
+			}
+		}
+		return pixeles;
+	}
+
+	public int[] leerspritey10x10(final int[] pixelesoriginal, final int ancho, final int alto) {
+		int[] pixeles = new int[ancho * alto];
+		for (int y = 0; y < alto; y++) {
+			for (int x = 0; x < ancho; x++) {
+				pixeles[(ancho - y - 1) + (ancho - x - 1) * ancho] = pixelesoriginal[x + (y) * ancho];
+			}
+		}
+		return pixeles;
+	}
+# Observaciones
+	
