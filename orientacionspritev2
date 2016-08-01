@@ -95,7 +95,7 @@ public int[] leerspritex01y01(final int[] pixelesoriginal, final int ancho, fina
 		int[] pixeles = new int[ancho * alto];
 		for (int y = 0; y < alto; y++) {
 			for (int x = 0; x < ancho; x++) {
-				pixeles[x + (ancho - y - 1) * ancho] = pixelesoriginal[x + (y) * ancho];
+				pixeles[x + (alto - y - 1) * ancho] = pixelesoriginal[x + (y) * ancho];
 			}
 		}
 		return pixeles;
@@ -105,7 +105,7 @@ public int[] leerspritex01y01(final int[] pixelesoriginal, final int ancho, fina
 		int[] pixeles = new int[ancho * alto];
 		for (int y = 0; y < alto; y++) {
 			for (int x = 0; x < ancho; x++) {
-				pixeles[(ancho - x - 1) + (ancho - y - 1) * ancho] = pixelesoriginal[x + (y) * ancho];
+				pixeles[(ancho - x - 1) + (alto - y - 1) * ancho] = pixelesoriginal[x + (y) * ancho];
 			}
 		}
 		return pixeles;
@@ -135,7 +135,7 @@ public int[] leerspritex01y01(final int[] pixelesoriginal, final int ancho, fina
 		int[] pixeles = new int[ancho * alto];
 		for (int y = 0; y < alto; y++) {
 			for (int x = 0; x < ancho; x++) {
-				pixeles[(ancho - 1 - y) + x * ancho] = pixelesoriginal[x + (y) * ancho];
+				pixeles[(alto - y - 1) + x * ancho] = pixelesoriginal[x + (y) * ancho];
 			}
 		}
 		return pixeles;
@@ -145,7 +145,7 @@ public int[] leerspritex01y01(final int[] pixelesoriginal, final int ancho, fina
 		int[] pixeles = new int[ancho * alto];
 		for (int y = 0; y < alto; y++) {
 			for (int x = 0; x < ancho; x++) {
-				pixeles[(ancho - y - 1) + (ancho - x - 1) * ancho] = pixelesoriginal[x + (y) * ancho];
+				pixeles[(alto - y - 1) + (ancho - x - 1) * ancho] = pixelesoriginal[x + (y) * ancho];
 			}
 		}
 		return pixeles;
